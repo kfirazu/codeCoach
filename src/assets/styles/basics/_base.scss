@@ -5,6 +5,8 @@
 body {
     margin: 0;
     padding: 0;
+    background-color: $clr8;
+    color: $clr2;
 }
 
 h1,
@@ -13,7 +15,6 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: caveat;
     margin: 0 0 0.6em;
     line-height: 1;
     font-weight: 400;
@@ -40,10 +41,11 @@ ul {
 
 button,
 .btn {
-    display: flex;
-    align-items: center;
+    // display: flex;
+    // align-items: center;
     transition: background-color .2s;
-    border: none;
+    font-family: lato-regulat;
+    // border: none;
 
     &:hover {
         cursor: pointer;
