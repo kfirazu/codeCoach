@@ -1,12 +1,21 @@
 
 // COLOR PALETTE
-$clr1: #000;
-$clr2: #fff;
+// Login background 
+$clr1: #16171b;
+// Login text 
+$clr2: #c8c8c9;
 $clr3: darken($clr2, 40%);
-$clr4: #2d2d2d;
+// Sign in button 
+$clr4: #bb432c;
+// Login box background
+$clr5: #222327;
+// Contrast color - maybe for lobby codeblock
+$clr6: #ecb613;
+// Picked language
+$clr7: #7ea9d8;
 
 // LAYOUT
-$layoutPadding: 20px;
+$layoutPadding: 100px;
 
 // LAYOUT BREAKPOINTS
 $break-narrow: 1200px;
