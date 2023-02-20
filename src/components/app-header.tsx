@@ -2,7 +2,9 @@ import { FC } from "react";
 
 const AppHeader: FC = () => {
     return (
-        <h1>CodeCoach</h1>
+        <header className="app-haeder full">
+            <h1>CodeCoach</h1>
+        </header>
     )
 }
 

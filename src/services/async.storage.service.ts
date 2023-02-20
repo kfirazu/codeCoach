@@ -9,6 +9,7 @@ export const storageService = {
     makeId
 }
 
+
 function query(entityType: string): Promise<any> {
     if (entityType !== null) {
         let entities = localStorage.getItem(entityType)
