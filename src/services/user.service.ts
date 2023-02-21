@@ -18,7 +18,7 @@ const demoUsers = [
     {
         _id: storageService.makeId(),
         username: 'Tom',
-        isMentor: true,
+        isMentor: false,
         password: '123456'
     },
     {
