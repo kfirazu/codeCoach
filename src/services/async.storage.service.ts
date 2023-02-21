@@ -72,7 +72,7 @@ function makeId(length = 10) {
     for (let i = 0; i < length; i++) {
         text += possible.charAt(Math.floor(Math.random() * possible.length))
     }
-    return +text
+    return text
 }
 
 
