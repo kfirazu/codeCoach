@@ -26,9 +26,15 @@ export const Lobby: FC<LobbyProps> = ({ loggedInUser }) => {
     // Puts codeblock in component state when component mounts
     useEffect(() => {
         // will need to fetch code blocks from db - async function.
-        const codeBlocks = codeBlockService.getCodeBlocks()
-        setCodeBlockList(codeBlocks)
-    }, [])
+        ; (async () => {
+            try {
+                const codeBlocks = await codeBlockService.getCodeBlocks()
+                setCodeBlockList(codeBlocks)
+            } catch (err) {
+                console.log('Cannot get code blocks', err)
+            }
+        })()
+    }, [setCodeBlockList])
 
     // Sends chosen code block to the server
     const onSelectCodeBlock = (codeBlockId: string) => {

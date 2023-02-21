@@ -70,7 +70,7 @@ const Login: FC<LoginProps> = ({ setLoggedInUser }) => {
                 <input
                     id="password"
                     name="password"
-                    type="text"
+                    type="password"
                     onChange={formik.handleChange}
                     value={formik.values.password}
                     onBlur={formik.handleBlur}

@@ -12,13 +12,13 @@ export const codeBlockService = {
     updateCodeBlock
 }
 
-function getCodeBlocks() {
+async function getCodeBlocks() {
     //should add async
     try {
-        // return await httpService.get(BASE_URL)
         _save(STORAGE_KEY, codeBlocks)
+        return await httpService.get(BASE_URL)
 
-        return codeBlocks
+        // return codeBlocks
     } catch (err) {
         console.log('Failed to get code blocks', err)
         throw err
@@ -27,8 +27,8 @@ function getCodeBlocks() {
 
 async function getCodeBlocksById(codeBlockId: string) {
     try {
-        return storageService.get(STORAGE_KEY , codeBlockId)
-        // return httpService.get(BASE_URL + codeBlockId)
+        // return storageService.get(STORAGE_KEY , codeBlockId)
+        return httpService.get(BASE_URL + codeBlockId)
     } catch (err) {
         console.log('Failed to get code block by id', err)
         throw err
@@ -38,8 +38,8 @@ async function getCodeBlocksById(codeBlockId: string) {
 
 async function updateCodeBlock(codeBlock: { _id: string, code: string }) {
     try {
-        return storageService.put(STORAGE_KEY + codeBlock._id, codeBlock)
-        // return httpService.put(BASE_URL + codeBlock._id, codeBlock)
+        // return storageService.put(STORAGE_KEY + codeBlock._id, codeBlock)
+        return httpService.put(BASE_URL + codeBlock._id, codeBlock)
     } catch (err) {
         console.log('Failed to update code block', err)
         throw err
