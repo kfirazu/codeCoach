@@ -27,7 +27,7 @@ function getCodeBlocks() {
 
 async function getCodeBlocksById(codeBlockId: string) {
     try {
-        return storageService.get(STORAGE_KEY + codeBlockId, codeBlockId)
+        return storageService.get(STORAGE_KEY , codeBlockId)
         // return httpService.get(BASE_URL + codeBlockId)
     } catch (err) {
         console.log('Failed to get code block by id', err)
