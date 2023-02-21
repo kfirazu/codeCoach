@@ -5,6 +5,7 @@ import { Route, Routes } from 'react-router-dom';
 import  Login  from './pages/login';
 import { Lobby } from './pages/lobby';
 import { User } from './interfaces/user.interface';
+import { CodeBlockDetails } from './pages/code-block-details';
 
 function App() {
 
@@ -15,6 +16,8 @@ function App() {
       <Routes>
         <Route path='/' element={<Login setLoggedInUser={setLoggedInUser} />} />
         <Route path='/lobby' element={<Lobby loggedInUser={loggedInUser}/>} />
+        <Route path='/codeBlock/:codeBlockId' element={<CodeBlockDetails loggedInUser={loggedInUser}/>} />
+
       </Routes>
 
     </div>
