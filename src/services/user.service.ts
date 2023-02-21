@@ -14,26 +14,26 @@ export const userService = {
 }
 
 
-const demoUsers = [
-    {
-        _id: storageService.makeId(),
-        username: 'Tom',
-        isMentor: false,
-        password: '123456'
-    },
-    {
-        _id: storageService.makeId(),
-        username: 'Jhon',
-        isMentor: false,
-        password: '654321'
-    }
-]
+// const demoUsers = [
+//     {
+//         _id: storageService.makeId(),
+//         username: 'Tom',
+//         isMentor: false,
+//         password: '123456'
+//     },
+//     {
+//         _id: storageService.makeId(),
+//         username: 'Jhon',
+//         isMentor: false,
+//         password: '654321'
+//     }
+// ]
 
 async function getUsers() {
     try {
-        const users = storageService.query(STORAGE_KEY_LOGGEDIN_USER) || demoUsers
-        return users
-        // return httpService.get(USER_BASE_URL)
+        // const users = storageService.query(STORAGE_KEY_LOGGEDIN_USER) || demoUsers
+        // return users
+        return await httpService.get(USER_BASE_URL)
     } catch (err) {
         console.log('Get users has failed', err)
         throw err
@@ -44,9 +44,9 @@ async function login(userCred: Credentials) {
     console.log('uesrCred from user service', userCred)
     try {
         // local only front end
-        const user = await storageService.post(`${AUTH_BASE_URL}login`, userCred)
+        // const user = await storageService.post(`${AUTH_BASE_URL}login`, userCred)
         // on cloud after having a database and backend
-        // const user = await httpService.post(`${AUTH_BASE_URL}login`, userCred)
+        const user = await httpService.post(`${AUTH_BASE_URL}login`, userCred)
         if (user) {
             // socketService.login(user.id)
             return _saveLocalUser(user)
@@ -60,7 +60,7 @@ async function login(userCred: Credentials) {
 
 async function logout() {
     try {
-        // await httpService.post(`${AUTH_BASE_URL}logout`)
+        await httpService.post(`${AUTH_BASE_URL}logout`)
         sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN_USER)
         // socketService.logout()
     } catch (err) {
