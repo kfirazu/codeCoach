@@ -3,6 +3,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { User } from '../interfaces/user.interface';
 import { CodeBlock } from '../interfaces/codeBlock.interface';
 import { codeBlockService } from '../services/code.block.service';
+import CodeMirror from '@uiw/react-codemirror';
+import { javascript } from '@codemirror/lang-javascript';
+import { material } from '@uiw/codemirror-theme-material'
+import { vscodeDark } from '@uiw/codemirror-theme-vscode'
+import { BsArrowLeft } from 'react-icons/bs'
+
 
 // Also should get as props the loggedInUser to determine if user can update the codeBlock or on readonly mode.
 // Should get the codeBlock id from the params (and get it from db or demo data)
@@ -26,9 +32,10 @@ export const CodeBlockDetails: FC<CodeBlockDetailsProps> = ({ loggedInUser }) =>
     console.log('loggedInUser codeblock details:', loggedInUser)
 
     useEffect(() => {
+        // onSetUserRole()
         //socket.on - user got into the room
         // cb function onSetUserRole(users[0])
-    }, [users])
+    }, [users, userRole])
 
     useEffect(() => {
         ; (async () => {
@@ -45,15 +52,36 @@ export const CodeBlockDetails: FC<CodeBlockDetailsProps> = ({ loggedInUser }) =>
 
     const onSetUserRole = () => {
         if (!users?.length) users![0].isMentor = true
-        setUserRole(users![0])
-
+        else {
+            users.forEach((user, idx) => {
+                if (idx !== 0) user.isMentor = false
+            })
+        }
     }
+
+    const handleChange = (newCode: string) => {
+        if (userRole?.isMentor) return
+        else console.log(newCode)
+    }
+
+
     console.log('codeBlock.code:', codeBlock?.code)
     return (
         <section className="code-block-details">
-            <h1>Hello from code block page</h1>
-            <div onClick={onGoBack}><h1>back</h1></div>
-            <pre>{codeBlock?.code}</pre>
+            <h1 className="code-block-title">{codeBlock?.title}</h1>
+            <div className="icon-back" onClick={onGoBack}><BsArrowLeft /></div>
+            {codeBlock && <CodeMirror
+                value={codeBlock.code}
+                height="400px"
+                width="700px"
+                extensions={[javascript({ jsx: true })]}
+                onChange={handleChange}
+                theme={vscodeDark}
+
+            // placeholder="placeholder: 'Please enter the JavaScript code.'"
+
+            />
+            }
         </section>
     )
 }
