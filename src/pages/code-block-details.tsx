@@ -64,10 +64,8 @@ export const CodeBlockDetails: FC<CodeBlockDetailsProps> = ({ loggedInUser }) =>
         })
 
         socketService.on('user-connected', (connectedUsers?: User[]) => {
-            console.log('connectedUsers:', connectedUsers)
             const connectedUser = connectedUsers?.find((user: User) => user._id === loggedInUser?._id)
             const role = connectedUser && connectedUser.isMentor ? UserRole.MENTOR : UserRole.STUDENT
-            console.log('role:', role)
             setUserRole(role)
 
 
@@ -78,7 +76,7 @@ export const CodeBlockDetails: FC<CodeBlockDetailsProps> = ({ loggedInUser }) =>
         }
 
     }, [])
-    
+
     // Updates codeblock on change 
     const handleChange = (newCode: string) => {
         if (loggedInUser?.isMentor) return
@@ -96,7 +94,6 @@ export const CodeBlockDetails: FC<CodeBlockDetailsProps> = ({ loggedInUser }) =>
     const onGoBack = () => {
         navigate(-1)
     }
-    // console.log('userRole:', userRole)
     return (
         <section className="code-block-details">
             <h1 className="code-block-title">{codeBlock?.title}</h1>

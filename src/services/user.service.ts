@@ -15,8 +15,7 @@ export const userService = {
 
 async function getUsers() {
     try {
-        // const users = storageService.query(STORAGE_KEY_LOGGEDIN_USER) || demoUsers
-        // return users
+    
         return await httpService.get(USER_BASE_URL)
     } catch (err) {
         console.log('Get users has failed', err)
