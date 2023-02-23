@@ -1,7 +1,15 @@
 # CodeCoach
 
-
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Demo
+
+You can try the app here: [CodeCoach.](https://codecoach-epqo.onrender.com)
+
+Usernames and passwords needed to login:
+- username: Tom , password: Tom123
+- username: Josh, password: Josh123
+- username: Dave, password: Dave123
 
 ## CodeCoach Description
 
@@ -9,7 +17,7 @@ CodeCoach is an app where students can learn programming with the assistance of 
 
 ## Technologies
 
-The technology stack we used was MERN - MongoDB, Express, React, Typescript and Node.js.
+The technology stack I used was MERN - MongoDB, Express, React, Typescript and Node.js.
 The app uses webSockets to update the code blocks in real time. The API calls to the backend are done with Rest API method.
 
 ## Getting started
@@ -46,7 +54,7 @@ That's it! The App should be opened automatically, enjoy!
 
 ## Deploy on Render
 
-This project is deployed with [Render](https://render.com/docs). A demo is available [here]().
+This project is deployed with [Render](https://render.com/docs). A demo is available [here](https://codecoach-epqo.onrender.com).
 
 ---
 

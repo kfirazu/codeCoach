@@ -4,6 +4,7 @@ import { User } from '../interfaces/user.interface';
 import { codeBlockService } from '../services/code.block.service';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { Loader } from '../components/loader';
 
 interface LobbyProps {
     loggedInUser: User | undefined
@@ -44,7 +45,7 @@ export const Lobby: FC<LobbyProps> = ({ loggedInUser }) => {
 
     }
 
-    if (!codeBlockList) return <div>Loading...</div>
+    if (!codeBlockList) return <div><Loader /></div>
     return (
         <section className="lobby">
             <h1 className="title">Choose a code block</h1>

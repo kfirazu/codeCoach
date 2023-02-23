@@ -10,6 +10,7 @@ import { BsArrowLeft } from 'react-icons/bs'
 import { socketService, SOCKET_EMIT_SET_CODE_BLOCK } from "../services/socket.service";
 import { utilService } from "../services/util.service";
 import { toast } from 'react-toastify';
+import { Loader } from "../components/loader";
 
 interface CodeBlockDetailsProps {
     loggedInUser: User | undefined
@@ -34,7 +35,7 @@ export const CodeBlockDetails: FC<CodeBlockDetailsProps> = ({ loggedInUser }) =>
         socketService.setCodeBlock(codeBlock._id, loggedInUser)
         toast.success(`Welcome ${loggedInUser?.username}`, {
             position: "top-right",
-            autoClose: 4000,
+            autoClose: 2000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
@@ -92,8 +93,10 @@ export const CodeBlockDetails: FC<CodeBlockDetailsProps> = ({ loggedInUser }) =>
     const throttleOnChange = utilService.throttle(handleChange, 1500)
 
     const onGoBack = () => {
+        socketService.off('user-connected')
         navigate(-1)
     }
+    if (!codeBlock) return <div><Loader /></div>
     return (
         <section className="code-block-details">
             <h1 className="code-block-title">{codeBlock?.title}</h1>
