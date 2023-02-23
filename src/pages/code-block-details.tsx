@@ -67,6 +67,7 @@ export const CodeBlockDetails: FC<CodeBlockDetailsProps> = ({ loggedInUser }) =>
         socketService.on('user-connected', (connectedUsers?: User[]) => {
             const connectedUser = connectedUsers?.find((user: User) => user._id === loggedInUser?._id)
             const role = connectedUser && connectedUser.isMentor ? UserRole.MENTOR : UserRole.STUDENT
+            console.log('role:', role)
             setUserRole(role)
 
 
