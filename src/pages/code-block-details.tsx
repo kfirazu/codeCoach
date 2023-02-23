@@ -5,18 +5,11 @@ import { CodeBlock } from '../interfaces/codeBlock.interface';
 import { codeBlockService } from '../services/code.block.service';
 import CodeMirror from '@uiw/react-codemirror';
 import { javascript } from '@codemirror/lang-javascript';
-import { material } from '@uiw/codemirror-theme-material'
 import { vscodeDark } from '@uiw/codemirror-theme-vscode'
 import { BsArrowLeft } from 'react-icons/bs'
-import { storageService } from '../services/async.storage.service';
-
-
-// Also should get as props the loggedInUser to determine if user can update the codeBlock or on readonly mode.
-// Should get the codeBlock id from the params (and get it from db or demo data)
-// Should send and update function using sockets (if user is the student)
-
-// Should have a state isMentor, setIsMentor- inside a function that checks the length of connected users to this "room".
-// if users[].length === 1 then setIsMentor(users[0]) else user = 'student'
+import { socketService, SOCKET_EMIT_SET_CODE_BLOCK } from "../services/socket.service";
+import { utilService } from "../services/util.service";
+import { toast } from 'react-toastify';
 
 interface CodeBlockDetailsProps {
     loggedInUser: User | undefined
@@ -26,86 +19,80 @@ export const CodeBlockDetails: FC<CodeBlockDetailsProps> = ({ loggedInUser }) =>
 
     const { codeBlockId } = useParams()
     const navigate = useNavigate()
-    const [userRole, setUserRole] = useState<User>()
-    const [connectedUsers, setConnectedUsers] = useState<User[]>([])
     const [codeBlock, setCodeBlock] = useState<CodeBlock>()
-    console.log('connectedUsers:', connectedUsers)
+    const [isSolutionMatched, setIsSolutionMatched] = useState(false)
 
+    // Connect codeBlock and user to codeBlock "room" via socket
     useEffect(() => {
-        // onSetUserRole()
-        //socket.on - user got into the room
-        // cb function onSetUserRole(users[0])
-    }, [connectedUsers, setConnectedUsers])
+        if (!codeBlock?._id) return
+        socketService.setCodeBlock(codeBlock._id, loggedInUser)
+        toast.success(`Welcome ${loggedInUser?.username}`, {
+            position: "top-right",
+            autoClose: 4000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
 
+        return () => socketService.off(SOCKET_EMIT_SET_CODE_BLOCK)
+    }, [codeBlock?._id, loggedInUser])
+
+
+    // Set codeblock from DB to component state
     useEffect(() => {
         ; (async () => {
+            if (!codeBlockId) return
             const codeBlock = await codeBlockService.getCodeBlocksById(codeBlockId!)
             setCodeBlock(codeBlock)
         })()
     }, [codeBlockId, setCodeBlock])
 
+    // Create an event listener to update code block socket & updates state
     useEffect(() => {
-        updateConnectedUsers(connectedUsers)
-    }, [connectedUsers])
+        socketService.on('update-code', (updatedCodeblock?: CodeBlock) => {
+            setCodeBlock(prevState => ({ ...prevState, code: updatedCodeblock?.code } as CodeBlock))
+            return () => socketService.off('update-code')
 
+        })
+    }, [])
 
+    // Updates codeblock on change 
+    const handleChange = (newCode: string) => {
+        if (loggedInUser?.isMentor) return
+        else {
+            codeBlockService.updateCodeBlock({ _id: codeBlock!._id, code: newCode })
+            socketService.updateCodeBlock({ _id: codeBlock!._id, code: newCode }, loggedInUser)
+            if (newCode === codeBlock?.solution) {
+                setIsSolutionMatched(true)
+            }
+        }
+    }
+
+    const throttleOnChange = utilService.throttle(handleChange, 1500)
 
     const onGoBack = () => {
         navigate(-1)
     }
 
-    // const onSetUserRole = () => {
-    //     if (!connectedUsers?.length) connectedUsers![0].isMentor = true
-    //     else {
-    //         connectedUsers.forEach((user, idx) => {
-    //             if (idx !== 0) user.isMentor = false
-    //         })
-    //     }
-    //     setUserRole(connectedUsers![0])
-    // }
-    const updateConnectedUsers = (users: User[]) => {
-        if (users.length === 1 && users[0]._id === loggedInUser?._id) {
-            users[0].isMentor = true
-            setConnectedUsers(users)
-
-        } else {
-            users.forEach((user, idx) => user.isMentor = false)
-        }
-
-    }
-
-    const handleChange = (newCode: string) => {
-        if (userRole?.isMentor) return
-        else {
-            codeBlockService.updateCodeBlock({ _id: codeBlock!._id, code: newCode })
-            if (newCode === codeBlock?.solution) {
-                alert('Great success!')
-            }
-        }
-    }
-
-    console.log('connectedUsers:', connectedUsers)
     return (
         <section className="code-block-details">
             <h1 className="code-block-title">{codeBlock?.title}</h1>
-            <div>{connectedUsers.map((user) => (
-                <div key={user._id}>{user.username}{user.isMentor ? 'Mentor' : 'Stuent'}</div>
-            ))}</div>
             <div className="icon-back" onClick={onGoBack}><BsArrowLeft /></div>
             {codeBlock && <CodeMirror
                 value={codeBlock.code}
                 height="400px"
                 width="800px"
                 extensions={[javascript({ jsx: true })]}
-                onChange={handleChange}
+                onChange={throttleOnChange}
                 editable={!loggedInUser?.isMentor}
                 theme={vscodeDark}
 
-            // placeholder="placeholder: 'Please enter the JavaScript code.'"
-
             />
             }
+            {isSolutionMatched && <div className="smiley-emoji">Great Job!!  😎</div>}
         </section>
     )
 }
-
