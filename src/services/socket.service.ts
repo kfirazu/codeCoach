@@ -29,8 +29,6 @@ function createSocketService() {
       socket.emit(SOCKET_EMIT_SET_CODE_BLOCK, codeBlockId, loggedInUser)
     },
     async updateCodeBlock(codeBlock: { _id: string, code: string }, loggedInUser: User | undefined) {
-      console.log('loggedInUser:', loggedInUser)
-      console.log('codeBlock:', codeBlock)
       if (!socket) await socketService.setup()
       socket.emit(SOCKET_EMIT_UPDATE_CODE_BLOCK, codeBlock, loggedInUser)
     },
