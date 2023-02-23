@@ -6,8 +6,8 @@
     margin-block-start: 100px;
 
     .title {
-        margin-block-end: rem(20px);
         margin-block-start: rem(20px);
+        margin-block-end: rem(20px);
 
     }
 
@@ -46,7 +46,7 @@
         border-radius: rem(8px);
         outline: transparent;
         border: solid 1px #3f3f45;
-        padding: rem(12px) rem(35px);
+        padding: rem(12px) rem(20px);
         background-color: #27272a;
         color: #ffffff;
         width: 85%;
@@ -67,5 +67,18 @@
         border: 1px solid #6795de;
         width: 85%;
 
+    }
+}
+
+@media (max-width: 500px) {
+    .login {
+        margin-block-start: rem(50px);
+
+        .login-form {}
+
+        input {
+            padding: rem(18px) rem(20px);
+
+        }
     }
 }

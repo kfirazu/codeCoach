@@ -40,7 +40,6 @@ export const CodeBlockDetails: FC<CodeBlockDetailsProps> = ({ loggedInUser }) =>
         return () => socketService.off(SOCKET_EMIT_SET_CODE_BLOCK)
     }, [codeBlock?._id, loggedInUser])
 
-
     // Set codeblock from DB to component state
     useEffect(() => {
         ; (async () => {
