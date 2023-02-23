@@ -79,18 +79,20 @@ export const CodeBlockDetails: FC<CodeBlockDetailsProps> = ({ loggedInUser }) =>
     return (
         <section className="code-block-details">
             <h1 className="code-block-title">{codeBlock?.title}</h1>
-            <div className="icon-back" onClick={onGoBack}><BsArrowLeft /></div>
-            {codeBlock && <CodeMirror
-                value={codeBlock.code}
-                height="400px"
-                width="800px"
-                extensions={[javascript({ jsx: true })]}
-                onChange={throttleOnChange}
-                editable={!loggedInUser?.isMentor}
-                theme={vscodeDark}
+            <div className="code-mirror">
+                <div className="icon-back" onClick={onGoBack}><BsArrowLeft /></div>
+                {codeBlock && <CodeMirror
+                    value={codeBlock.code}
+                    height="400px"
+                    width="800px"
+                    extensions={[javascript({ jsx: true })]}
+                    onChange={throttleOnChange}
+                    editable={!loggedInUser?.isMentor}
+                    theme={vscodeDark}
 
-            />
-            }
+                />
+                }
+            </div>
             {isSolutionMatched && <div className="smiley-emoji">Great Job!!  😎</div>}
         </section>
     )

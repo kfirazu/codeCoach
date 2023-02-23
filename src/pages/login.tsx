@@ -21,12 +21,12 @@ export const Login: FC<LoginProps> = ({ setLoggedInUser }) => {
         } as Credentials,
         validationSchema: yup.object({
             username: yup.string()
-                .min(3, "Username must be at least 3 characters. Please try again")
+                .min(3, "Username must be at least 3 characters")
                 .max(15, "Must be 15 characters or less. Please try again.")
                 .required("Username is required"),
             password: yup.string()
                 .required('Password is required')
-                .min(5, 'Your password must be at least 5 characters long. Please try again.')
+                .min(5, 'Password must be at least 5 characters long')
                 .matches(/[a-zA-Z 0-9]/, 'Password can only contain Latin letters or numbers.')
         }),
         onSubmit: (values: Credentials) => {
@@ -46,7 +46,7 @@ export const Login: FC<LoginProps> = ({ setLoggedInUser }) => {
                         draggable: true,
                         progress: undefined,
                         theme: "light",
-                        });
+                    });
                 }
             })()
         }
@@ -82,11 +82,11 @@ export const Login: FC<LoginProps> = ({ setLoggedInUser }) => {
                     placeholder="Enter password "
                 />
                 {formik.touched.password && formik.errors.password ? (
-                    <span className="error">{formik.errors.password}</span>
+                    <span className="error" >{formik.errors.password}</span>
                 ) : <span>&nbsp;</span>}
                 <button className="btn btn-login" type="submit">Sign in</button>
             </form>
-        </section>
+        </section >
     )
 }
 
