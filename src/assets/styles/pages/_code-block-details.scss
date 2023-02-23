@@ -12,6 +12,9 @@
 
     .icon-back {
         font-size: rem(25px);
+        align-self: flex-start;
+        margin-block-end: rem(10px);
+        cursor: pointer;
     }
 
     .smiley-emoji {
