@@ -15,12 +15,18 @@ interface CodeBlockDetailsProps {
     loggedInUser: User | undefined
 }
 
+enum UserRole {
+    MENTOR = 0,
+    STUDENT = 1
+}
+
 export const CodeBlockDetails: FC<CodeBlockDetailsProps> = ({ loggedInUser }) => {
 
     const { codeBlockId } = useParams()
     const navigate = useNavigate()
     const [codeBlock, setCodeBlock] = useState<CodeBlock>()
     const [isSolutionMatched, setIsSolutionMatched] = useState(false)
+    const [userRole, setUserRole] = useState<UserRole>(UserRole.STUDENT)
 
     // Connect codeBlock and user to codeBlock "room" via socket
     useEffect(() => {
@@ -50,14 +56,29 @@ export const CodeBlockDetails: FC<CodeBlockDetailsProps> = ({ loggedInUser }) =>
     }, [codeBlockId, setCodeBlock])
 
     // Create an event listener to update code block socket & updates state
+    // Sets first user as mentor
     useEffect(() => {
         socketService.on('update-code', (updatedCodeblock?: CodeBlock) => {
             setCodeBlock(prevState => ({ ...prevState, code: updatedCodeblock?.code } as CodeBlock))
-            return () => socketService.off('update-code')
 
         })
-    }, [])
 
+        socketService.on('user-connected', (connectedUsers?: User[]) => {
+            console.log('connectedUsers:', connectedUsers)
+            const connectedUser = connectedUsers?.find((user: User) => user._id === loggedInUser?._id)
+            const role = connectedUser && connectedUser.isMentor ? UserRole.MENTOR : UserRole.STUDENT
+            console.log('role:', role)
+            setUserRole(role)
+
+
+        })
+        return () => {
+            socketService.off('update-code')
+            socketService.off('user-connected')
+        }
+
+    }, [])
+    
     // Updates codeblock on change 
     const handleChange = (newCode: string) => {
         if (loggedInUser?.isMentor) return
@@ -75,7 +96,7 @@ export const CodeBlockDetails: FC<CodeBlockDetailsProps> = ({ loggedInUser }) =>
     const onGoBack = () => {
         navigate(-1)
     }
-
+    // console.log('userRole:', userRole)
     return (
         <section className="code-block-details">
             <h1 className="code-block-title">{codeBlock?.title}</h1>
@@ -87,7 +108,7 @@ export const CodeBlockDetails: FC<CodeBlockDetailsProps> = ({ loggedInUser }) =>
                     width="800px"
                     extensions={[javascript({ jsx: true })]}
                     onChange={throttleOnChange}
-                    editable={!loggedInUser?.isMentor}
+                    editable={userRole === UserRole.STUDENT}
                     theme={vscodeDark}
 
                 />
