@@ -102,7 +102,7 @@ export const CodeBlockDetails: FC<CodeBlockDetailsProps> = ({ loggedInUser }) =>
         <section className="code-block-details">
             <h1 className="code-block-title">{codeBlock?.title}</h1>
             <div className="code-mirror">
-                <div className="icon-back" onClick={onGoBack}><BsArrowLeft /></div>
+                <div><BsArrowLeft className="icon-back" onClick={onGoBack} /></div>
                 {codeBlock && <CodeMirror
                     value={codeBlock.code}
                     height="400px"
