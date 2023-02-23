@@ -1,46 +1,55 @@
-# Getting Started with Create React App
+# CodeCoach
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## CodeCoach Description
 
-In the project directory, you can run:
+CodeCoach is an app where students can learn programming with the assistance of a mentor online.
 
-### `npm start`
+## Technologies
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The technology stack we used was MERN - MongoDB, Express, React, Typescript and Node.js.
+The app uses webSockets to update the code blocks in real time. The API calls to the backend are done with Rest API method.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Getting started
 
-### `npm test`
+Clone the project:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+git clone https://github.com/kfirazu/codeCoach.git
 
-### `npm run build`
+```
+Also, clone the backend folder [here](https://github.com/kfirazu/codeCoach-backend)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Enter the backend folder and make sure you have node_modules installed. After that we will initiate the server with 'npm start':
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+cd backend
+npm i 
+npm start
+```
 
-### `npm run eject`
+You should get a console output that the server is up and running at port 3030.
+Enter the frontend folder and repeat the same process.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```
+cd frontend
+npm i 
+npm start
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+You should get a console output that the application is up and running at localhost:3000.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+That's it! The App should be opened automatically, enjoy!
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Deploy on Render
 
-## Learn More
+This project is deployed with [Render](https://render.com/docs). A demo is available [here]().
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Author
+ - [Kfir Azulay](https://github.com/kfirazu)
