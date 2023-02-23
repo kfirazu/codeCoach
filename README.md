@@ -7,9 +7,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 You can try the app here: [CodeCoach.](https://codecoach-epqo.onrender.com)
 
 Usernames and passwords needed to login:
-- username: Tom , password: Tom123
-- username: Josh, password: Josh123
-- username: Dave, password: Dave123
+- username: Tom , password: tom123
+- username: Josh, password: josh123
+- username: Dave, password: dave123
 
 ## CodeCoach Description
 
