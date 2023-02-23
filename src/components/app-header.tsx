@@ -1,9 +1,13 @@
 import { FC } from "react";
+import { useNavigate } from 'react-router-dom';
 
-const AppHeader: FC = () => {
+export const AppHeader: FC = () => {
+
+    const navigate = useNavigate()
     return (
-        <h1>CodeCoach</h1>
+        <header className="app-haeder full">
+            <h1 onClick={() => navigate('/')}><span>C</span>ode<span>C</span>oach</h1>
+        </header>
     )
 }
 
-export { AppHeader }

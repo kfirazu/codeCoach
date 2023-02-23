@@ -1,0 +1,17 @@
+.app-haeder {
+    display: flex;
+    align-items: center;
+    height: rem(70px);
+    background-color: $clr3;
+
+    h1 {
+        margin-bottom: 0;
+        margin-inline-start: rem(40px);
+        cursor: pointer;
+
+        span {
+            color: $clr4;
+        }
+    }
+
+}

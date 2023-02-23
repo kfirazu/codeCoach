@@ -1,0 +1,43 @@
+.code-block-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .code-block-title {
+        margin-block-start: rem(100px);
+        margin-block-end: rem(30px);
+        font-size: 2rem;
+
+    }
+
+    .icon-back {
+        font-size: rem(25px);
+        align-self: flex-start;
+        margin-block-end: rem(10px);
+        cursor: pointer;
+    }
+
+    .smiley-emoji {
+        font-size: 3rem;
+        text-align: center;
+        animation-name: bounce;
+        animation-duration: 1s;
+        animation-iteration-count: 3;
+        animation-timing-function: ease-in-out;
+        margin-top: 1rem;
+    }
+
+    @keyframes bounce {
+        0% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-10px);
+        }
+
+        100% {
+            transform: translateY(0);
+        }
+    }
+}

@@ -9,6 +9,7 @@ export const storageService = {
     makeId
 }
 
+
 function query(entityType: string): Promise<any> {
     if (entityType !== null) {
         let entities = localStorage.getItem(entityType)
@@ -28,7 +29,6 @@ async function get(entityType: string, entityId: string) {
 async function post(entityType: string, newEntity: any) {
     if (!newEntity._id) newEntity._id = makeId()
     const entities = await query(entityType)
-    console.log('entities:', entities)
     entities.push(newEntity)
     _save(entityType, entities)
     return newEntity
@@ -71,7 +71,7 @@ function makeId(length = 10) {
     for (let i = 0; i < length; i++) {
         text += possible.charAt(Math.floor(Math.random() * possible.length))
     }
-    return +text
+    return text
 }
 
 

@@ -4,22 +4,25 @@
 $clr1: #16171b;
 // Login text 
 $clr2: #c8c8c9;
-$clr3: darken($clr2, 40%);
+$clr3: lighten($clr1, 10%);
 // Sign in button 
 $clr4: #bb432c;
 // Login box background
-$clr5: #222327;
+$clr5: #2b2c30;
 // Contrast color - maybe for lobby codeblock
 $clr6: #ecb613;
 // Picked language
 $clr7: #7ea9d8;
+$clr8: lighten($clr1, 4%);
 
 // LAYOUT
 $layoutPadding: 100px;
+$narrowLayoutPadding: 40px;
 
 // LAYOUT BREAKPOINTS
-$break-narrow: 1200px;
-$break-normal: 1360px;
+$break-narrow: 480px;
+$break-normal: 570px;
+$break-medium: 1360px;
 $break-wide: 1920px;
 
 $padded-break-narrow: $break-narrow + $layoutPadding * 2;

@@ -1,6 +1,6 @@
 import { Credentials, User } from "../interfaces/user.interface"
-import { storageService } from './async.storage.service'
 import { httpService } from './http.service';
+import { socketService } from "./socket.service";
 
 const USER_BASE_URL = 'user/'
 const AUTH_BASE_URL = 'auth/'
@@ -13,12 +13,11 @@ export const userService = {
     logout
 }
 
-
-async function getUsers(filterBy: {} = {}) {
+async function getUsers() {
     try {
-        const users = storageService.query(STORAGE_KEY_LOGGEDIN_USER)
-        return users
-        // return httpService.get(USER_BASE_URL, filterBy)
+        // const users = storageService.query(STORAGE_KEY_LOGGEDIN_USER) || demoUsers
+        // return users
+        return await httpService.get(USER_BASE_URL)
     } catch (err) {
         console.log('Get users has failed', err)
         throw err
@@ -26,14 +25,10 @@ async function getUsers(filterBy: {} = {}) {
 }
 
 async function login(userCred: Credentials) {
-    console.log('uesrCred from user service', userCred)
     try {
-        // local only front end
-        const user = await storageService.post(`${AUTH_BASE_URL}login`, userCred)
-        // on cloud after having a database
-        // const user = await httpService.post(`${AUTH_BASE_URL}login`, userCred)
+        const user = await httpService.post(`${AUTH_BASE_URL}login`, userCred)
         if (user) {
-            // socketService.login(user.id)
+            socketService.login(user._id)
             return _saveLocalUser(user)
 
         }
@@ -45,17 +40,14 @@ async function login(userCred: Credentials) {
 
 async function logout() {
     try {
-        // await httpService.post(`${AUTH_BASE_URL}logout`)
+        await httpService.post(`${AUTH_BASE_URL}logout`)
         sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN_USER)
-        // socketService.logout()
+        socketService.logout()
     } catch (err) {
         console.log('Cannot logout', err)
         throw err
     }
 }
-
-
-
 
 function getLoggedInUser() {
     const user = sessionStorage.getItem(STORAGE_KEY_LOGGEDIN_USER)

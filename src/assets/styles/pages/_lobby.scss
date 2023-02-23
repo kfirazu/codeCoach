@@ -1,0 +1,51 @@
+.lobby {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-block-start: 120px;
+
+    .title {
+        font-size: 2.5rem;
+        text-align: center;
+    }
+
+    .code-block-list {
+        background-color: $clr3;
+        border-radius: rem(10px);
+
+        :last-child {
+            margin-block-end: rem(20px);
+        }
+
+        :first-child {
+            margin-block-start: rem(20px);
+        }
+
+
+        
+        .code-block-preview {
+            padding: rem(15px) rem(35px);
+            font-size: 1.25rem;
+            cursor: pointer;
+            font-weight: 400;
+            font-family: montserrat-light, sans-serif;
+            // border-bottom: 1px solid $clr2;
+
+            &:hover {
+                transform: scale(1.1);
+                cursor: pointer;
+            }
+        }
+    }
+
+}
+
+@include for-normal-layout {
+
+    .lobby {
+
+        .title {
+
+        }
+    }
+}
