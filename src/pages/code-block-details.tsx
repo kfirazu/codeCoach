@@ -93,7 +93,7 @@ export const CodeBlockDetails: FC<CodeBlockDetailsProps> = ({ loggedInUser }) =>
     const throttleOnChange = utilService.throttle(handleChange, 1500)
 
     const onGoBack = () => {
-        socketService.off('user-connected')
+        socketService.emit('user-leave-room', ({ loggedInUser, codeBlockId: codeBlock?._id }))
         navigate(-1)
     }
     if (!codeBlock) return <div><Loader /></div>
