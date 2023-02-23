@@ -1,6 +1,6 @@
 import { Credentials, User } from "../interfaces/user.interface"
-import { storageService } from './async.storage.service'
 import { httpService } from './http.service';
+import { socketService } from "./socket.service";
 
 const USER_BASE_URL = 'user/'
 const AUTH_BASE_URL = 'auth/'
@@ -12,22 +12,6 @@ export const userService = {
     getLoggedInUser,
     logout
 }
-
-
-// const demoUsers = [
-//     {
-//         _id: storageService.makeId(),
-//         username: 'Tom',
-//         isMentor: false,
-//         password: '123456'
-//     },
-//     {
-//         _id: storageService.makeId(),
-//         username: 'Jhon',
-//         isMentor: false,
-//         password: '654321'
-//     }
-// ]
 
 async function getUsers() {
     try {
@@ -41,14 +25,10 @@ async function getUsers() {
 }
 
 async function login(userCred: Credentials) {
-    console.log('uesrCred from user service', userCred)
     try {
-        // local only front end
-        // const user = await storageService.post(`${AUTH_BASE_URL}login`, userCred)
-        // on cloud after having a database and backend
         const user = await httpService.post(`${AUTH_BASE_URL}login`, userCred)
         if (user) {
-            // socketService.login(user.id)
+            socketService.login(user._id)
             return _saveLocalUser(user)
 
         }
@@ -62,7 +42,7 @@ async function logout() {
     try {
         await httpService.post(`${AUTH_BASE_URL}logout`)
         sessionStorage.removeItem(STORAGE_KEY_LOGGEDIN_USER)
-        // socketService.logout()
+        socketService.logout()
     } catch (err) {
         console.log('Cannot logout', err)
         throw err

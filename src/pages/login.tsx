@@ -4,17 +4,13 @@ import * as yup from 'yup'
 import { useFormik } from "formik"
 import { userService } from "../services/user.service";
 import { useNavigate } from "react-router-dom";
-import { FaRegUser } from 'react-icons/fa'
-import { BiLock } from 'react-icons/bi'
-
-
-
+import { toast } from "react-toastify";
 
 interface LoginProps {
     setLoggedInUser: Dispatch<SetStateAction<User | undefined>>
 }
 
-const Login: FC<LoginProps> = ({ setLoggedInUser }) => {
+export const Login: FC<LoginProps> = ({ setLoggedInUser }) => {
 
     const navigate = useNavigate()
 
@@ -41,7 +37,16 @@ const Login: FC<LoginProps> = ({ setLoggedInUser }) => {
                     if (user) navigate('/lobby')
                 } catch (err) {
                     console.log('Cannot login')
-                    // Handle err with error message
+                    toast.error('Invalid credentials. Please try again', {
+                        position: "top-right",
+                        autoClose: 4000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light",
+                        });
                 }
             })()
         }
@@ -85,4 +90,4 @@ const Login: FC<LoginProps> = ({ setLoggedInUser }) => {
     )
 }
 
-export default Login
+
